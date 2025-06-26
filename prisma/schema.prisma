@@ -1,0 +1,158 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  accounts      Account[]
+  sessions      Session[]
+
+  stores Store[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Store {
+  id           String  @id @default(cuid())
+  name         String
+  category     String
+  description  String?
+  address      String
+  country      String
+  city         String
+  email        String?
+  phone        String?
+  website      String?
+  openingHours String?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  Product Product[]
+
+  Sale Sale[]
+
+  Debt Debt[]
+}
+
+model Product {
+  id                String  @id @default(cuid())
+  name              String
+  price             Float
+  sellPrice         Float
+  quantity          Int
+  availableQuantity Int
+  category          String
+  description       String?
+  image             String?
+
+  storeId String
+  store   Store  @relation(fields: [storeId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  SaleItem SaleItem[]
+}
+
+model Sale {
+  id           String     @id @default(cuid())
+  clientName   String?
+  clientPhone  String?
+
+  storeId      String
+  store        Store      @relation(fields: [storeId], references: [id])
+
+  items        SaleItem[]
+
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model SaleItem {
+  id         String   @id @default(cuid())
+  saleId     String
+  productId  String
+  quantity   Int
+  sellPrice  Float
+
+  sale       Sale     @relation(fields: [saleId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
+}
+
+model Debt {
+  id        String     @id @default(cuid())
+  name      String
+  type      DebtType
+  amount    Float
+  status    DebtStatus
+  paidAt    DateTime?
+  notes     String?
+
+  storeId   String
+  store     Store      @relation(fields: [storeId], references: [id])
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+
+
+enum DebtType {
+  CUSTOMER
+  SUPPLIER
+}
+
+enum DebtStatus {
+  PENDING
+  PAID
+  OVERDUE
+}
