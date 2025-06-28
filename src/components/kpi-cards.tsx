@@ -123,7 +123,7 @@ export function KPICards() {
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
               <div>
                 <CardTitle className="text-sm font-semibold text-slate-700">{card.title}</CardTitle>
-                <p className="text-xs text-slate-500 mt-1">{card.subtitle}</p>
+                {/* <p className="text-xs text-slate-500 mt-1">{card.subtitle}</p> */}
               </div>
               <div className={`p-3 rounded-xl ${card.bgColor} border border-white/50 shadow-sm`}>
                 <card.icon className={`h-5 w-5 ${card.color}`} />
