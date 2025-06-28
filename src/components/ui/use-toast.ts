@@ -8,6 +8,7 @@ type ToastProps = {
 }
 
 export function useToast() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [toasts, setToasts] = useState<ToastProps[]>([])
 
   const toast = useCallback((props: ToastProps) => {

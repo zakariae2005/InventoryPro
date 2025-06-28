@@ -24,7 +24,7 @@ type SalesChartState = {
   fetchSalesChartData: () => Promise<void>
 }
 
-export const useSalesChart = create<SalesChartState>((set, get) => ({
+export const useSalesChart = create<SalesChartState>((set) => ({
   salesData: [],
   isLoading: false,
   error: null,

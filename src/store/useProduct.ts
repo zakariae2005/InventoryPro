@@ -19,7 +19,7 @@ type ProductState = {
   deleteProduct: (id: string) => Promise<void>
 }
 
-export const useProduct = create<ProductState>((set, get) => ({
+export const useProduct = create<ProductState>((set) => ({
   products: [],
   isLoading: false,
   error: null,

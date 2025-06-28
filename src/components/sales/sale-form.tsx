@@ -71,13 +71,18 @@ export default function SaleForm({ products, editingSale, onSubmit, onCancel, is
 
   const updateItem = (index: number, field: keyof SaleItemForm, value: string | number) => {
     const updatedItems = [...items]
-    if (field === 'quantity') {
+    
+    if (field === 'productId') {
+      // productId should always be a string
+      updatedItems[index] = { ...updatedItems[index], [field]: String(value) }
+    } else if (field === 'quantity') {
+      // quantity should be a number, with minimum value of 1
       updatedItems[index] = { ...updatedItems[index], [field]: Math.max(1, Number(value)) }
     } else if (field === 'sellPrice') {
+      // sellPrice should be a number, with minimum value of 0
       updatedItems[index] = { ...updatedItems[index], [field]: Math.max(0, Number(value)) }
-    } else {
-      updatedItems[index] = { ...updatedItems[index], [field]: value }
     }
+    
     setItems(updatedItems)
   }
 

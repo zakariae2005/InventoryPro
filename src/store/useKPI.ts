@@ -23,7 +23,7 @@ type KPIState = {
   fetchKPIData: () => Promise<void>
 }
 
-export const useKPI = create<KPIState>((set, get) => ({
+export const useKPI = create<KPIState>((set) => ({
   kpiData: null,
   isLoading: false,
   error: null,

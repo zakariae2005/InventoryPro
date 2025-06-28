@@ -156,22 +156,24 @@ export default function DebtsManagement() {
     })
 
     if (sortField) {
-      filtered.sort((a, b) => {
-        let aValue: any = a[sortField]
-        let bValue: any = b[sortField]
+  filtered.sort((a, b) => {
+    let aValue: number
+    let bValue: number
 
-        if (sortField === "createdAt") {
-          aValue = new Date(aValue).getTime()
-          bValue = new Date(bValue).getTime()
-        }
-
-        if (sortDirection === "asc") {
-          return aValue < bValue ? -1 : aValue > bValue ? 1 : 0
-        } else {
-          return aValue > bValue ? -1 : aValue < bValue ? 1 : 0
-        }
-      })
+    if (sortField === "createdAt") {
+      aValue = new Date(a.createdAt ?? "").getTime()
+      bValue = new Date(b.createdAt ?? "").getTime()
+    } else {
+      aValue = a.amount
+      bValue = b.amount
     }
+
+    return sortDirection === "asc"
+      ? aValue - bValue
+      : bValue - aValue
+  })
+}
+
 
     return filtered
   }, [debts, searchTerm, typeFilter, sortField, sortDirection])

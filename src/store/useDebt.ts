@@ -18,7 +18,7 @@ type DebtState = {
   deleteDebt: (id: string) => Promise<void>
 }
 
-export const useDebt = create<DebtState>((set, get) => ({
+export const useDebt = create<DebtState>((set) => ({
   debts: [],
   isLoading: false,
   error: null,

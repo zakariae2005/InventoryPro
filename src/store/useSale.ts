@@ -20,7 +20,7 @@ type SaleState = {
   deleteSale: (id: string) => Promise<void>
 }
 
-export const useSale = create<SaleState>((set, get) => ({
+export const useSale = create<SaleState>((set) => ({
   sales: [],
   isLoading: false,
   error: null,

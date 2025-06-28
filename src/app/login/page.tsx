@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // app/login/page.tsx
 "use client"
 
@@ -166,7 +167,7 @@ export default function LoginPage() {
             </Button>
 
             <div className="text-center space-y-2">
-              <p className="text-sm text-slate-600">Don't have an account?</p>
+              <p className="text-sm text-slate-600">Don&apos;t have an account?</p>
               <Link href="/register">
                 <Button variant="link" className="text-blue-600 hover:underline p-0">
                   Create Account

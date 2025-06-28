@@ -5,7 +5,7 @@ import { Edit, Plus, Search, Trash2, DollarSign, ShoppingCart, Users, TrendingUp
 import { format } from "date-fns"
 
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog } from "@/components/ui/dialog"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 
@@ -23,6 +23,8 @@ interface Product {
   availableQuantity: number
   category: string
 }
+
+
 
 export default function SalesManagement() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -80,6 +82,7 @@ export default function SalesManagement() {
   )
   const avgSaleValue = totalSales > 0 ? totalRevenue / totalSales : 0
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (formData: any) => {
     try {
       console.log('Handling form submission:', formData)

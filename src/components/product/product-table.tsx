@@ -102,6 +102,7 @@ export function ProductTable({ products, onEdit, onDelete, isLoading = false }: 
               </TableCell>
             </TableRow>
           ) : (
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             products.map((product, index) => {
               const stockStatus = getStockStatus(product.availableQuantity, product.quantity)
               return (
