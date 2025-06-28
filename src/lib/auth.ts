@@ -51,7 +51,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/login",
-    signUp: "/register",
+    
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -61,11 +61,11 @@ export const authOptions: NextAuthOptions = {
       return token
     },
     async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id as string
-      }
-      return session
-    },
+  if (token && session.user) {
+    session.user.id = token.id as string;
+  }
+  return session;
+}
   },
   secret: process.env.NEXTAUTH_SECRET,
 }

@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 
 import { KPICards } from "@/components/kpi-cards"
-import { SalesChart } from "@/components/sales-chart"
+// import { SalesChart } from "@/components/sales-chart"
 import { RecentProducts } from "@/components/recent-products"
 import { RecentSales } from "@/components/recent-sales"
 import { PendingDebts } from "@/components/pending-debts"
@@ -25,9 +25,9 @@ export default function DashboardPage() {
         </Suspense>
 
         {/* Sales Chart */}
-        <div className="w-full animate-fade-in-delay-1">
+        {/* <div className="w-full animate-fade-in-delay-1">
           <SalesChart />
-        </div>
+        </div> */}
 
         {/* Bottom Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in-delay-2">
