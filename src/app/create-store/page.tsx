@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -62,6 +63,8 @@ export default function CreateStore() {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
+  const router = useRouter()
+
  const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault()
 
@@ -95,9 +98,7 @@ export default function CreateStore() {
 
     const data = await res.json()
     console.log("Store created:", data)
-    
-    // Optionally redirect to dashboard or show success message
-    // window.location.href = '/dashboard'
+    router.push("/")
   } catch (err) {
     console.error("Error:", err)
     // You might want to show an error message to the user
@@ -105,7 +106,7 @@ export default function CreateStore() {
 }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8 px-4 w-full">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">

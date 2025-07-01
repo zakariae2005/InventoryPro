@@ -105,7 +105,7 @@ export default function RegisterPage() {
       });
 
       if (signInRes?.ok) {
-        router.push("/");
+        router.push("/login");
         router.refresh();
       } else {
         setServerError("Registration successful, but failed to sign in. Please try logging in.");
@@ -121,7 +121,7 @@ export default function RegisterPage() {
     setIsLoading(true);
     try {
       await signIn("google", { 
-        callbackUrl: "/",
+        callbackUrl: "/login",
         redirect: true 
       });
     } catch (error) {
@@ -131,7 +131,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4 w-full">
       <Card className="w-full max-w-md shadow-xl border-0 bg-white/80 backdrop-blur-sm">
         <CardHeader className="space-y-1 text-center">
           <CardTitle className="text-2xl font-bold tracking-tight">Create Account</CardTitle>

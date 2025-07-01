@@ -44,7 +44,7 @@ export default function LoginPage() {
       if (res?.error) {
         setError("Invalid email or password");
       } else if (res?.ok) {
-        router.push("/");
+        router.push("/create-store");
         router.refresh();
       }
     } catch (error) {
@@ -58,7 +58,7 @@ export default function LoginPage() {
     setIsLoading(true);
     try {
       await signIn("google", { 
-        callbackUrl: "/",
+        callbackUrl: "/create-store",
         redirect: true 
       });
     } catch (error) {
@@ -68,7 +68,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4 w-full">
       <Card className="w-full max-w-md shadow-xl border-0 bg-white/80 backdrop-blur-sm">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold tracking-tight">Welcome Back</CardTitle>

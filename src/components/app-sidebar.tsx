@@ -1,7 +1,8 @@
 "use client"
 
-import { BarChart3, Package, ShoppingCart, CreditCard, Building2 } from "lucide-react"
+import { BarChart3, Package, ShoppingCart, CreditCard, Building2, LogOut } from "lucide-react"
 import Link from "next/link"
+import { signOut } from "next-auth/react"
 
 import {
   Sidebar,
@@ -41,6 +42,10 @@ const items = [
 ]
 
 export function AppSidebar() {
+  const handleSignOut = () => {
+    signOut({ callbackUrl: "/login" }) // Redirect to login page after sign out
+  }
+
   return (
     <Sidebar className="border-r border-gray-100 bg-white/80 backdrop-blur-sm">
       <SidebarHeader className="border-b border-gray-50 pb-4">
@@ -97,6 +102,15 @@ export function AppSidebar() {
                 <span className="truncate font-semibold text-slate-900">John Doe</span>
                 <span className="truncate text-xs text-slate-500 font-medium">Administrator</span>
               </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton 
+              onClick={handleSignOut}
+              className="hover:bg-red-50 hover:text-red-700 transition-all duration-200 rounded-lg px-3 py-2.5 group cursor-pointer"
+            >
+              <LogOut className="size-4 text-slate-600 group-hover:text-red-700 transition-colors" />
+              <span className="font-medium text-slate-700 group-hover:text-red-700 ml-3">Sign Out</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
