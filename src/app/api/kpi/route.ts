@@ -65,14 +65,14 @@ export async function GET() {
 
     // Calculate total debts (placeholder - set to 0 if no debt system implemented)
     // If you want to implement debts later, uncomment the following lines:
-    // const debts = await prisma.debt.findMany({
-    //   where: {
-    //     storeId: storeId
-    //   }
-    // })
-    // const totalDebts = debts.reduce((total, debt) => total + debt.amount, 0)
+    const debts = await prisma.debt.findMany({
+      where: {
+        storeId: storeId
+      }
+    })
+    const totalDebts = debts.reduce((total, debt) => total + debt.amount, 0)
     
-    const totalDebts = 0 // Placeholder value
+    
 
     return NextResponse.json({
       totalRevenue,
