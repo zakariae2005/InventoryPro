@@ -1,47 +1,30 @@
+"use client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ExternalLink, Package } from "lucide-react"
-
-const recentProducts = [
-  {
-    id: 1,
-    name: "Wireless Headphones",
-    category: "Electronics",
-    price: 99.99,
-    availableQuantity: 15,
-  },
-  {
-    id: 2,
-    name: "Coffee Mug",
-    category: "Kitchen",
-    price: 12.5,
-    availableQuantity: 3,
-  },
-  {
-    id: 3,
-    name: "Laptop Stand",
-    category: "Office",
-    price: 45.0,
-    availableQuantity: 8,
-  },
-  {
-    id: 4,
-    name: "Plant Pot",
-    category: "Garden",
-    price: 18.75,
-    availableQuantity: 2,
-  },
-  {
-    id: 5,
-    name: "Desk Lamp",
-    category: "Furniture",
-    price: 65.0,
-    availableQuantity: 12,
-  },
-]
+import { useProduct } from "@/store/useProduct"
+import { useEffect } from "react"
+import { toast } from "sonner"
+import Link from "next/link"
 
 export function RecentProducts() {
+  const { 
+    products, 
+    error, 
+    fetchProducts, 
+  } = useProduct()
+
+   useEffect(() => {
+      fetchProducts()
+    }, [fetchProducts])
+
+    useEffect(() => {
+    if (error) {
+      toast.error(error)
+    }
+  }, [error])
+
   return (
     <Card className="border-slate-200/50 bg-white/60 backdrop-blur-sm shadow-sm">
       <CardHeader className="flex flex-row items-center justify-between pb-4">
@@ -54,13 +37,16 @@ export function RecentProducts() {
           size="sm" 
           className="text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
         >
+          <Link href="/products">
           View All
+          </Link>
+          
           <ExternalLink className="h-4 w-4 ml-2" />
         </Button>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
-          {recentProducts.map((product) => (
+          {products.slice(-5).map((product) => (
             <div 
               key={product.id} 
               className="flex items-center justify-between p-4 rounded-xl border border-slate-200/50 bg-gradient-to-r from-slate-50/50 to-white hover:shadow-md hover:border-slate-300/50 transition-all duration-200"
