@@ -98,7 +98,7 @@ export default function RegisterPage() {
     }
 
     // ✅ After successful registration, redirect to login WITHOUT auto sign-in
-    router.push("/login");
+    router.push("/create-store");
   } catch (error) {
     setServerError("Something went wrong. Please try again.");
   } finally {
@@ -111,7 +111,7 @@ export default function RegisterPage() {
     setIsLoading(true);
     try {
       await signIn("google", { 
-        callbackUrl: "/login",
+        callbackUrl: "/create-store",
         redirect: true 
       });
     } catch (error) {
