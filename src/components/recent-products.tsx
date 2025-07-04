@@ -12,6 +12,7 @@ export function RecentProducts() {
   const { 
     products, 
     error, 
+    isLoading,
     fetchProducts, 
   } = useProduct()
 
@@ -46,36 +47,45 @@ export function RecentProducts() {
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
-          {products.slice(-5).map((product) => (
-            <div 
-              key={product.id} 
-              className="flex items-center justify-between p-4 rounded-xl border border-slate-200/50 bg-gradient-to-r from-slate-50/50 to-white hover:shadow-md hover:border-slate-300/50 transition-all duration-200"
-            >
-              <div className="space-y-2">
-                <p className="font-semibold text-slate-900 text-sm">{product.name}</p>
-                <div className="flex items-center space-x-2">
-                  <Badge variant="secondary" className="text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200">
-                    {product.category}
-                  </Badge>
-                  <span className="text-sm font-bold text-emerald-600">${product.price}</span>
-                </div>
-              </div>
-              <div className="text-right">
-                <p
-                  className={`text-sm font-semibold ${
-                    product.availableQuantity < 5 ? "text-red-600" : "text-slate-700"
-                  }`}
-                >
-                  {product.availableQuantity} in stock
-                </p>
-                {product.availableQuantity < 5 && (
-                  <Badge variant="destructive" className="text-xs mt-1 bg-red-50 text-red-700 border-red-200">
-                    Low Stock
-                  </Badge>
-                )}
-              </div>
-            </div>
-          ))}
+          
+          {isLoading ? (
+  // 🔄 Loading skeleton
+  Array.from({ length: 5 }).map((_, i) => (
+    <div key={i} className="animate-pulse bg-slate-200 h-20 rounded-xl" />
+  ))
+) : (
+  products.slice(-5).map((product) => (
+    <div 
+      key={product.id} 
+      className="flex items-center justify-between p-4 rounded-xl border border-slate-200/50 bg-gradient-to-r from-slate-50/50 to-white hover:shadow-md hover:border-slate-300/50 transition-all duration-200"
+    >
+      <div className="space-y-2">
+        <p className="font-semibold text-slate-900 text-sm">{product.name}</p>
+        <div className="flex items-center space-x-2">
+          <Badge variant="secondary" className="text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200">
+            {product.category}
+          </Badge>
+          <span className="text-sm font-bold text-emerald-600">${product.price}</span>
+        </div>
+      </div>
+      <div className="text-right">
+        <p
+          className={`text-sm font-semibold ${
+            product.availableQuantity < 5 ? "text-red-600" : "text-slate-700"
+          }`}
+        >
+          {product.availableQuantity} in stock
+        </p>
+        {product.availableQuantity < 5 && (
+          <Badge variant="destructive" className="text-xs mt-1 bg-red-50 text-red-700 border-red-200">
+            Low Stock
+          </Badge>
+        )}
+      </div>
+    </div>
+  ))
+)}
+
         </div>
       </CardContent>
     </Card>
