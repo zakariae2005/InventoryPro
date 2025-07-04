@@ -75,47 +75,37 @@ export default function RegisterPage() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateForm()) {
+  e.preventDefault();
+  if (!validateForm()) {
+    return;
+  }
+  setIsLoading(true);
+  setServerError("");
+
+  try {
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setServerError(data.message || "Failed to register");
+      setIsLoading(false);
       return;
     }
-    setIsLoading(true);
-    setServerError("");
 
-    try {
-      const res = await fetch("/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+    // ✅ After successful registration, redirect to login WITHOUT auto sign-in
+    router.push("/login");
+  } catch (error) {
+    setServerError("Something went wrong. Please try again.");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setServerError(data.message || "Failed to register");
-        setIsLoading(false);
-        return;
-      }
-
-      // After successful registration, automatically sign in the user
-      const signInRes = await signIn("credentials", {
-        email: formData.email,
-        password: formData.password,
-        redirect: false,
-      });
-
-      if (signInRes?.ok) {
-        router.push("/login");
-        router.refresh();
-      } else {
-        setServerError("Registration successful, but failed to sign in. Please try logging in.");
-      }
-    } catch (error) {
-      setServerError("Something went wrong. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
